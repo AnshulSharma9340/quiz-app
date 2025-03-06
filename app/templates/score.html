@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+<!-- Score Section -->
+{% block content %}
+<div class="score-section">
+    <div class="score-card">
+        <h1>Your Score</h1>
+        <!-- <p>You answered <strong>{{ correct_answers }}</strong> out of <strong>{{ total_questions }}</strong> questions correctly.</p> -->
+        <p>Your total score is: <strong>{{ score }}</strong></p>
+        <a href="{{ url_for('route.question', id = 1)}}" class="btn btn-primary btn-lg">Try Again</a>
+        <a href="{{ url_for('auth.profile', user = user)}}" class="btn btn-secondary btn-lg">Back to Dashboard</a>
+    </div>
+</div>
+
+{% endblock %}
+
+

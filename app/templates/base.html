@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            
+            font-family: 'Lato', sans-serif;
+            background-color: #f8f9fa;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+        }
+   
+        img{
+           
+        }
+        .jumbotron {
+            margin-top: 20px;
+            background-color: palegreen;
+        }
+        .start-btn {
+            margin-top: 20px;
+        }
+        .login-error
+        {
+            background-color: red;
+            color:white;
+            font-size: 1.2em;
+        }
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+        }
+        .footer a {
+            color: #6c757d;
+            margin-right: 15px;
+        }
+        .quiz-image {
+            transition: transform 0.2s;
+        }
+        .quiz-image:hover {
+            transform: scale(1.05);
+        }
+        .links
+        {
+            margin-top: 1.5em;
+        }
+        /* score style */
+
+        .score-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+           margin-top: 100px;
+           
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        .score-card {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .score-card h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .score-card p {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .score-card .btn {
+            font-size: 1.2rem;
+            padding: 10px 30px;
+            margin-top: 20px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* instruction */
+
+        
+
+        
+        .instructions-section {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 800px;
+            margin: 50px auto;
+        }
+        .instructions-section h1 {
+            font-weight: 600;
+            color: #333;
+        }
+        .instructions-section p {
+            font-weight: 400;
+            color: #555;
+        }
+        .instructions-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        .instructions-section ul li {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-weight: 500;
+            color: #333;
+            font-family: 'Poppins', sans-serif;
+        }
+        .start-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .start-btn:hover {
+            background-color: #0056b3;
+            color:#fff;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+       
+        /* profile */
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .profile-header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+        .btn-start-quiz {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .btn-start-quiz:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        {% if current_user.is_authenticated %}
+        <a class="navbar-brand" href=" {{ url_for('auth.profile', user = user)}}">profile</a>
+        {% else %}
+        <a class="navbar-brand" href=" {{ url_for('route.index')}}">Quiz App</a>
+        {% endif%}
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                {% if current_user.is_authenticated %}
+                  
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <!-- <div class="alert alert-{{ category }}">{{ message }}</div> -->
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+

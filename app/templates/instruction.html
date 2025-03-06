@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="instructions-section">
+            <div class="header">
+                <h1>Quiz Instructions</h1>
+            </div>
+            <p>Please read the following instructions carefully before starting the quiz:</p>
+            <ul>
+                <li>The quiz consists of multiple-choice questions (MCQs).</li>
+                <li>Each question has four options. Only one of them is correct.</li>
+                <li>You have a total of <strong>5 minutes</strong> to complete the quiz.</li>
+                <li>Each correct answer awards you <strong>10 points</strong>.</li>
+                <li>There is no negative marking for incorrect answers.</li>
+                <li>You cannot skip a question. Answer all questions to proceed.</li>
+                <li>Your progress will be saved automatically.</li>
+            </ul>
+            <a href="{{ url_for('route.question', id = 1, user = user) }}" class="start-btn">Start Quiz</a>
+        </div>
+    </div>
+    
+{% endblock %}

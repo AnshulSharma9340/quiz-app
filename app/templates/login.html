@@ -1,0 +1,55 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    {% for category, message in messages %}
+                        <div class=" alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% endwith %}
+    
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h3 class="text-center">Login</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('auth.login') }}">
+                        {{ form.hidden_tag() }}
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            {{ form.email(class="form-control", placeholder="Enter your email") }}
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            {{ form.password(class="form-control", placeholder="Enter your password") }}
+                        </div>
+                        <!-- <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                            <label class="form-check-label" for="remember">Remember Me</label>
+                        </div> -->
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    </form>
+                </div>
+            </div>
+            <div class="links mt-3">
+                New User? <a href="{{ url_for('auth.register') }}">Click to Register!</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

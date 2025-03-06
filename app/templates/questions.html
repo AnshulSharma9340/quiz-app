@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Question {{ questions.q_id }}</h5>
+                    <div class="progress mb-3">
+                        <div class="progress-bar" role="progressbar" style="width: {{ (100 * (total_allowed_time - remaining_time)) / total_allowed_time }}%" aria-valuenow="{{ remaining_time }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="card-text">{{ questions.ques }}</p>
+                    <form method="POST" novalidate>
+                        {{ form.hidden_tag() }}
+                        <div class="list-group">
+                            {% for option in form.options %}
+                                <label class="list-group-item">
+                                    {{ option}} {{ option.label }}
+                                </label>
+                            {% endfor %}
+                        </div>
+                        <div class="mt-3 text-center">
+                            {{ form.submit(class="btn btn-primary") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var remainingTime = {{ remaining_time }};
+    var totalTime = {{ total_allowed_time }};
+    var progressBar = document.querySelector('.progress-bar');
+
+    function updateTimer() {
+        remainingTime -= 1;
+        var percentage = ((totalTime - remainingTime) / totalTime) * 100;
+        progressBar.style.width = percentage + '%';
+        
+        if (remainingTime <= 0) {
+            window.location.href = "{{ url_for('route.question', id = 2) }}";
+            window.location.href = "{{ url_for('route.score') }}";
+        }
+    }
+
+    setInterval(updateTimer, 1000);
+</script>
+{% endblock %}
