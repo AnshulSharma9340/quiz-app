@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container mt-5">
     <div class="profile-header">
-        <img src="../static/img/USer.png" alt="User profile picture">
+        <img src="{{ url_for('static', filename='img/user.png') }}" alt="User profile picture">
         <h1>Welcome, {{ user.username }}!</h1>
         <p>{{ user.email }}</p>
     </div>

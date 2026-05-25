@@ -41,7 +41,6 @@
         progressBar.style.width = percentage + '%';
         
         if (remainingTime <= 0) {
-            window.location.href = "{{ url_for('route.question', id = 2) }}";
             window.location.href = "{{ url_for('route.score') }}";
         }
     }
